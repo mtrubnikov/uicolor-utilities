@@ -365,6 +365,10 @@ static NSMutableDictionary *colorNameCache = nil;
 // Returns a UIColor by scanning the string for a hex number and passing that to +[UIColor colorWithRGBHex:]
 // Skips any leading whitespace and ignores any trailing characters
 + (UIColor *)colorWithHexString:(NSString *)stringToConvert {
+	//to support hex strings beginning with the hash sign (e.g. #FF0000)
+	if([stringToConvert characterAtIndex:0] == '#') {
+        stringToConvert = [stringToConvert substringFromIndex:1];
+    }
 	NSScanner *scanner = [NSScanner scannerWithString:stringToConvert];
 	unsigned hexNum;
 	if (![scanner scanHexInt:&hexNum]) return nil;
